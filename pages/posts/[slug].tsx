@@ -13,11 +13,12 @@ import PostTitle from '../../components/post-title'
 import Tags from '../../components/tags'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
 import { CMS_NAME } from '../../lib/constants'
+import TextSeperator from '../../components/text-seperator'
 
 export default function Post({ post, posts, preview }) {
   const router = useRouter()
   const morePosts = posts?.edges
-
+  console.log(posts.edges[0].node.tags.edges)
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -46,14 +47,15 @@ export default function Post({ post, posts, preview }) {
                 date={post.date}
                 author={post.author}
                 categories={post.categories}
+                readTime={post.seo.readingTime}
               />
               <PostBody content={post.content} />
               <footer>
-                {post.tags.edges.length > 0 && <Tags tags={post.tags} />}
+                {post?.tags?.edges?.length > 0 && <Tags tags={post?.tags} />}
               </footer>
             </article>
 
-            <SectionSeparator />
+            <TextSeperator text={"More articles from recent"} />
             {morePosts.length > 0 && <MoreStories posts={morePosts} />}
           </>
         )}
@@ -83,7 +85,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts = await getAllPostsWithSlug()
 
   return {
-    paths: allPosts.edges.map(({ node }) => `/posts/${node.slug}`) || [],
+    paths: allPosts.edges?.map(({ node }) => `/posts/${node.slug}`) || [],
     fallback: true,
   }
 }

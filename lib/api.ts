@@ -1,3 +1,5 @@
+import { AllPostsWithSlugData, Posts } from "./data"
+import parse from 'html-react-parser';
 const API_URL = process.env.WORDPRESS_API_URL
 
 async function fetchAPI(query = '', { variables }: Record<string, any> = {}) {
@@ -70,6 +72,14 @@ export async function getAllPostsForHome(preview) {
             excerpt
             slug
             date
+            seo {
+              readingTime
+            }
+            tags(first: 1) {
+              nodes {
+                name 
+              }
+            }
             featuredImage {
               node {
                 sourceUrl
@@ -97,7 +107,6 @@ export async function getAllPostsForHome(preview) {
       },
     }
   )
-
   return data?.posts
 }
 
@@ -125,6 +134,9 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       excerpt
       slug
       date
+      seo {
+        readingTime
+      }
       featuredImage {
         node {
           sourceUrl
@@ -164,6 +176,9 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
               title
               excerpt
               content
+              seo {
+                readingTime
+              }
               author {
                 node {
                   ...AuthorFields
@@ -192,6 +207,10 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
       },
     }
   )
+
+  if (data.post?.content) {
+    const htmlContent = parse(data.post.content)
+  }
 
   // Draft posts may not have an slug
   if (isDraft) data.post.slug = postPreview.id

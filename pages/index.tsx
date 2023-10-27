@@ -11,7 +11,7 @@ import { CMS_NAME } from '../lib/constants'
 export default function Index({ allPosts: { edges }, preview }) {
   const heroPost = edges[0]?.node
   const morePosts = edges.slice(1)
-
+  
   return (
     <Layout preview={preview}>
       <Head>
@@ -37,7 +37,7 @@ export default function Index({ allPosts: { edges }, preview }) {
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview)
-
+  console.log(allPosts.edges[0])
   return {
     props: { allPosts, preview },
     revalidate: 10,
