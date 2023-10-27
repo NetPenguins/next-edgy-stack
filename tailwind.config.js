@@ -4,14 +4,34 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
-  theme: {
+  variants: {
     extend: {
+      backgroundColor: ['active'],
+    },
+  },
+  darkMode: 'media',
+  theme: {
+    fontFamily: {
+      sans: ['Merriweather', 'system-ui'],
+    },
+    extend: {
+      backgroundImage: {
+        'gradient': 'linear-gradient(180deg, #111216 95%, #4251625c)',
+      },
+      maxWidth: {
+        '1220px': '1220px',
+      },
       colors: {
+        primary: '#FF5733',
+        secondary: '#2D2D2D',
         'accent-1': '#FAFAFA',
         'accent-2': '#EAEAEA',
         'accent-7': '#333',
+        'accent-8': '#121212',
+        'accent-9': '#111216',
         success: '#0070f3',
         cyan: '#79FFE1',
+        khaki: 'rgb(233, 218, 172)'
       },
       spacing: {
         28: '7rem',
@@ -21,6 +41,11 @@ module.exports = {
       },
       lineHeight: {
         tight: 1.2,
+      },
+      fontWeight: {
+        'normal': 400,
+        'semibold': 600,
+        'bold': 700
       },
       fontSize: {
         '5xl': '2.5rem',
@@ -36,3 +61,4 @@ module.exports = {
   },
   plugins: [],
 }
+
